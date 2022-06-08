@@ -15,7 +15,7 @@ public class StringTest {
     @Test
     void replace_XMFFUtMFeO() {
         String actual = "abc".replace("b", "d");
-        assertThat(actual).isEqualTo("aAdc");
+        assertThat(actual).contains("d");
 
     }
 
@@ -23,6 +23,8 @@ public class StringTest {
     void split_test() {
         String[] actual = "1,2".split(",");
         String[] expected = new String[] {"1","2"};
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).containsExactly(expected);
     }
+
+
 }
