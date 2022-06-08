@@ -26,5 +26,12 @@ public class StringTest {
         assertThat(actual).containsExactly(expected);
     }
 
+    @Test
+    void string_test() {
+        String actual = "(1,2)";
+        String expected = actual.substring(1, 4);
+        assertThat(expected).isEqualTo("1,2");
+        System.out.println(expected);
+    }
 
 }
