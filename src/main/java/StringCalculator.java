@@ -31,4 +31,13 @@ public class StringCalculator {
 
         return Integer.parseInt(target) * Integer.parseInt(minusElement);
     }
+
+    public double devide(String value) {
+        String[] parsedString = value.split(" ");
+
+        String target = parsedString[0];
+        String minusElement = parsedString[1];
+
+        return Integer.parseInt(target) / Double.parseDouble(minusElement);
+    }
 }

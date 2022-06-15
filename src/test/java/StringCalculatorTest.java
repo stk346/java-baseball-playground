@@ -1,5 +1,4 @@
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -36,6 +35,17 @@ public class StringCalculatorTest {
         StringCalculator stringcalculator = new StringCalculator();
 
         int result = stringcalculator.multiply(input);
+
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @DisplayName("나눗셈 기능")
+    @ParameterizedTest
+    @CsvSource(value = {"1 2,0.5", "2 2,1"})
+    void devide(String input, double expected) {
+        StringCalculator stringcalculator = new StringCalculator();
+
+        double result = stringcalculator.devide(input);
 
         assertThat(result).isEqualTo(expected);
     }
