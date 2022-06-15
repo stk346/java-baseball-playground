@@ -28,4 +28,15 @@ public class StringCalculatorTest {
 
         assertThat(result).isEqualTo(expected);
     }
+
+    @DisplayName("곱셈 기능")
+    @ParameterizedTest
+    @CsvSource(value = {"1 2,2", "2 2,4"})
+    void multiply(String input, int expected) {
+        StringCalculator stringcalculator = new StringCalculator();
+
+        int result = stringcalculator.multiply(input);
+
+        assertThat(result).isEqualTo(expected);
+    }
 }
