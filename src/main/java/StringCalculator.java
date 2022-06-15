@@ -1,43 +1,59 @@
-import java.util.Scanner;
-
 public class StringCalculator {
+    public double plus(double first, double second) {
+        return first + second;
+    }
 
-    public int plus(String value) {
-        String[] parsedString = value.split(" ");
+    public double minus(double first, double second) {
+        return first - second;
+    }
 
-        int result = 0;
+    public double multiply(double first, double second) {
+        return first * second;
+    }
 
-        for (String number : parsedString) {
-            result += Integer.parseInt(number);
+    public double devide(double first, double second) {
+        return first / second;
+    }
+
+    public double calculate(String input) {
+        String[] parsedInput = input.split(" ");
+
+        double result = Double.parseDouble(parsedInput[0]);
+
+        for (int i = 1; i < parsedInput.length; i++) {
+            result = temp(parsedInput, result, i);
         }
 
         return result;
     }
 
-    public int minus(String value) {
-        String[] parsedString = value.split(" ");
+    private double temp(String[] parsedInput, double result, int i) {
+        String target = parsedInput[i];
+        //숫자 판별
 
-        String target = parsedString[0];
-        String minusElement = parsedString[1];
+        if (Character.isDigit(target.charAt(0))) {
+            int number = Integer.parseInt(target);
+            String operator = parsedInput[i - 1];
 
-        return Integer.parseInt(target) - Integer.parseInt(minusElement);
+            result = operate(operator, result, number);
+
+        }
+        return result;
     }
 
-    public int multiply(String value) {
-        String[] parsedString = value.split(" ");
-
-        String target = parsedString[0];
-        String minusElement = parsedString[1];
-
-        return Integer.parseInt(target) * Integer.parseInt(minusElement);
-    }
-
-    public double devide(String value) {
-        String[] parsedString = value.split(" ");
-
-        String target = parsedString[0];
-        String minusElement = parsedString[1];
-
-        return Integer.parseInt(target) / Double.parseDouble(minusElement);
+    private double operate(String operator, double result, int number) {
+        if (operator.equals("+")) {
+            result = plus(result, number);
+        }
+        if (operator.equals("-")) {
+            result = minus(result, number);
+        }
+        if (operator.equals("*")) {
+            result = multiply(result, number);
+        }
+        if (operator.equals("/")) {
+            result = devide(result, number);
+        }
+        return result;
     }
 }
