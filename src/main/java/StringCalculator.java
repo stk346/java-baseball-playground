@@ -13,4 +13,13 @@ public class StringCalculator {
 
         return result;
     }
+
+    public int minus(String value) {
+        String[] parsedString = value.split(" ");
+        // 1 2
+        String target = parsedString[0];
+        String minusElement = parsedString[1];
+
+        return Integer.parseInt(target) - Integer.parseInt(minusElement);
+    }
 }
