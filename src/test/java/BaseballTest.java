@@ -15,7 +15,7 @@ public class BaseballTest {
     @DisplayName("임의의 숫자를 받는 input함수 테스트")
     @Test
     void printRandomNumber() {
-        System.out.println((int)(Math.random() * 999));
+        System.out.println((int) (Math.random() * 999));
     }
 
     @DisplayName("스트라이크 개수를 확인하는 테스트")
@@ -58,10 +58,43 @@ public class BaseballTest {
         String userSingleNumber = "1";
         boolean result = false;
 
-        if(computerSingleNumber.equals(userSingleNumber)) {
+        if (computerSingleNumber.equals(userSingleNumber)) {
             result = true;
         }
 
         assertThat(result).isEqualTo(true);
     }
+
+    @DisplayName("볼 개수를 세는 메소드")
+    @Test
+    void isBall() {
+        String computerinput = "713";
+        String userinput = "123";
+        String tempComputerInputForBallCnt = "";
+        String tempUserInputForBallCnt = "";
+
+        BaseballGame baseball = new BaseballGame();
+        for (int i = 0; i < 3; i++) {
+            char charcomputerinput = computerinput.charAt(i);
+            char charuserinput = userinput.charAt(i);
+
+            if (baseball.checkSingleStrike(charcomputerinput, charuserinput)) {
+                continue;
+            }
+
+            tempComputerInputForBallCnt += String.valueOf(charcomputerinput);
+            tempUserInputForBallCnt += String.valueOf(charuserinput);
+
+        }
+
+        int ballcounts = 0;
+        for (int j = 0; j < tempUserInputForBallCnt.length(); j++) {
+            if (tempComputerInputForBallCnt.contains( String.valueOf(tempUserInputForBallCnt.charAt(j)) )) {
+                ballcounts += 1;
+            }
+        }
+
+        assertThat(ballcounts).isEqualTo(1);
+    }
 }
+
