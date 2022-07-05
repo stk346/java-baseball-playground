@@ -96,7 +96,7 @@ public class BaseballTest {
         }
         assertThat(ballcounts).isEqualTo(1);
     }
-    @DisplayName("볼 개수를 세는 메소드1")
-    @Test
+
+    @DisplayName("test")
 }
 
