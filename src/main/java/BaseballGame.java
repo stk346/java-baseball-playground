@@ -21,5 +21,9 @@ public class BaseballGame {
         return strikeCnt;
     }
 
+    public String generateRandomNumberBalls() {
+        return "123";
+    }
+
 
 }

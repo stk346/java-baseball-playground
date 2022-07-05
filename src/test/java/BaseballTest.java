@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -89,12 +90,13 @@ public class BaseballTest {
 
         int ballcounts = 0;
         for (int j = 0; j < tempUserInputForBallCnt.length(); j++) {
-            if (tempComputerInputForBallCnt.contains( String.valueOf(tempUserInputForBallCnt.charAt(j)) )) {
+            if (tempComputerInputForBallCnt.contains(String.valueOf(tempUserInputForBallCnt.charAt(j)))) {
                 ballcounts += 1;
             }
         }
-
         assertThat(ballcounts).isEqualTo(1);
     }
+    @DisplayName("볼 개수를 세는 메소드1")
+    @Test
 }
 
