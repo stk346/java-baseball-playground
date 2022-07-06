@@ -85,7 +85,6 @@ public class BaseballTest {
 
             tempComputerInputForBallCnt += String.valueOf(charcomputerinput);
             tempUserInputForBallCnt += String.valueOf(charuserinput);
-
         }
 
         int ballcounts = 0;
@@ -96,7 +95,36 @@ public class BaseballTest {
         }
         assertThat(ballcounts).isEqualTo(1);
     }
+
+    @DisplayName("난수를 생성했을 때 세가지 자릿수의 값이 모두 다른지 확인하는 테스트")
+    @Test
+    void RandomNumberTest() {
+        Random random = new Random(); // 랜덤 객체 생성
+        int FirstRandNum = random.nextInt(1,9);
+        int SecondRandNum = random.nextInt(1,9);
+        int ThirdRandNum = random.nextInt(1,9);
+        System.out.print(FirstRandNum + "" + SecondRandNum + "" + ThirdRandNum);
+
+//        assertThat((FirstRandNum = SecondRandNum) & (SecondRandNum != ThirdRandNum) & (ThirdRandNum != FirstRandNum));
+        assertThat(FirstRandNum != SecondRandNum).isEqualTo(true);
+        assertThat(SecondRandNum != ThirdRandNum).isEqualTo(true);
+        assertThat(FirstRandNum != ThirdRandNum).isEqualTo(true);
+
+        while (true) {
+            if ((FirstRandNum != SecondRandNum) & (SecondRandNum != ThirdRandNum) & (ThirdRandNum != FirstRandNum)) {
+                break;
+            }
+        }
+    }
+    @DisplayName("낫싱 여부를 판단하는 메소드")
     @Test
 
+    void isNothing() {
+        String ComputerBall = "713";
+        String UserBall = "456";
+
+
+    }
 }
+
 

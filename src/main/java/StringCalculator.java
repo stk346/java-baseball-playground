@@ -56,4 +56,5 @@ public class StringCalculator {
         }
         return result;
     }
+
 }
