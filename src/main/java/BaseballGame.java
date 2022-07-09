@@ -1,133 +1,107 @@
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class BaseballGame {
-    public int printRandomNumber() {
-        return (int) Math.random() * 999;
+    private ArrayList<String> generateArray() {
+        ArrayList<String> initArray = new ArrayList<>(List.of("1", "2", "3", "4", "5", "6", "7", "8", "9"));
+        return initArray;
     }
 
-    public boolean checkSingleStrike(char computerSingleNumber, char userSingleNumber) {
-        boolean isStrike = false;
-        if (computerSingleNumber == userSingleNumber) {
-            isStrike = true;
-        }
-        return isStrike;
+    private ArrayList<String> shuffledArray() {
+        ArrayList<String> initArray = generateArray();
+        Collections.shuffle(initArray);
+        return initArray;
     }
 
-    public int getStrikeCnt(String computerInput, String userBalls) {
+    public String generateComputerInput() {
+        ArrayList<String> shuffledList = shuffledArray();
+        StringBuffer computerOutput = new StringBuffer();
+        computerOutput.append(shuffledList.get(0));
+        computerOutput.append(shuffledList.get(1));
+        computerOutput.append(shuffledList.get(2));
+        String fixedComputerInput = String.valueOf(computerOutput);
+        System.out.println("테스트용 정답 : " + fixedComputerInput);
+
+        return fixedComputerInput;
+    }
+
+    public String getUserInput() {
+        System.out.println("숫자를 입력해주세요. : ");
+        Scanner sc = new Scanner(System.in);
+        String userInput = sc.nextLine();
+        System.out.println(userInput);
+        return userInput;
+    }
+
+    public int getStrikeCnt(String computerInput, String userInput) {
         int strikeCnt = 0;
-        for (int i = 0; i < computerInput.length(); i++) {
-            if (this.checkSingleStrike(computerInput.charAt(i), userBalls.charAt(i))) {
+        for (int i = 0; i < userInput.length(); i++) {
+            if (computerInput.charAt(i) == userInput.charAt(i)) {
                 strikeCnt += 1;
             }
         }
         return strikeCnt;
     }
 
+    public String removeComputerInputIfStrike(String computerInput, String userInput) {
+        String removedComputerInput = "";
+        for (int i = 0; i < userInput.length(); i++) {
+            if (computerInput.charAt(i) == userInput.charAt(i)) {
+                continue;
+            }
+            removedComputerInput += computerInput.charAt(i);
+        }
+        return removedComputerInput;
+    }
+
+    public String removeUserInputIfStrike(String computerInput, String userInput) {
+        String removedUserInput = "";
+        for (int i = 0; i < userInput.length(); i++) {
+            if (computerInput.charAt(i) == userInput.charAt(i)) {
+                continue;
+            }
+            removedUserInput += userInput.charAt(i);
+        }
+        return removedUserInput;
+    }
+
     public int getBallCnt(String computerInput, String userInput) {
-        String tempComputerInputForBallCnt = "";
-        String tempUserInputForBallCnt = "";
+        String removedComputerInput = removeComputerInputIfStrike(computerInput, userInput);
+        String removedUserInput = removeUserInputIfStrike(computerInput, userInput);
 
-        for (int i = 0; i < computerInput.length(); i++) {
-            char charcomputerinput = computerInput.charAt(i);
-            char charuserinput = userInput.charAt(i);
-
-            if (this.checkSingleStrike(charcomputerinput, charuserinput)) {
-                continue;
-            }
-
-            tempComputerInputForBallCnt += String.valueOf(charcomputerinput);
-            tempUserInputForBallCnt += String.valueOf(charuserinput);
-        }
-        int ballCounts = 0;
-        for (int j = 0; j < tempUserInputForBallCnt.length(); j++) {
-            if (tempComputerInputForBallCnt.contains(String.valueOf(tempUserInputForBallCnt.charAt(j)))) {
-                ballCounts += 1;
+        int ballCnt = 0;
+        for (int i = 0; i < removedUserInput.length(); i++) {
+            if (removedComputerInput.contains(String.valueOf(removedUserInput.charAt(i)))) {
+                ballCnt += 1;
             }
         }
-        return ballCounts;
+        return ballCnt;
     }
 
-    public String isNothing(String computerInput, String userInput) {
-        String emptyValues = "";
-        if ((this.getStrikeCnt(computerInput, userInput) == 0) & (this.getBallCnt(computerInput, userInput) == 0)) {
-            emptyValues += "낫싱";
+    public void getStrikeAndBallMassage(String computerInput, String userInput) {
+        int strikeCnt = getStrikeCnt(computerInput, userInput);
+        int ballCnt = getBallCnt(computerInput, userInput);
+
+        if ((strikeCnt > 0) & (ballCnt > 0)) {
+            System.out.println(strikeCnt + "스트라이크 " + ballCnt + "볼" );
         }
-        return emptyValues;
+        if ((strikeCnt > 0) & (ballCnt == 0)) {
+            System.out.println(strikeCnt + "스트라이크");
+        }
+        if ((strikeCnt == 0) & (ballCnt > 0)) {
+            System.out.println(ballCnt + "볼" );
+        }
+
     }
+    public void getNothing(String computerInput, String userInput) {
+        int strikeCnt = getStrikeCnt(computerInput, userInput);
+        int ballCnt = getBallCnt(computerInput, userInput);
 
-    public String generateRandomNumberBalls() {
-        Random random = new Random(); // 랜덤 객체 생성
-        int FirstRandNum = random.nextInt(1, 9);
-        int SecondRandNum = random.nextInt(1, 9);
-        int ThirdRandNum = random.nextInt(1, 9);
-        // 각 자릿수의 숫자가 모두 다르게 나올 때 까지 루프 돌리기
-        while (true) {
-            if ((FirstRandNum != SecondRandNum) & (SecondRandNum != ThirdRandNum) & (ThirdRandNum != FirstRandNum)) {
-                break;
-            } else {
-                FirstRandNum = random.nextInt(1, 9);
-                SecondRandNum = random.nextInt(1, 9);
-                ThirdRandNum = random.nextInt(1, 9);
-            }
+        if ((strikeCnt == 0) & (ballCnt == 0)) {
+            System.out.println("낫싱");
         }
-        String computerInput = "";
-        computerInput += String.valueOf(FirstRandNum);
-        computerInput += String.valueOf(SecondRandNum);
-        computerInput += String.valueOf(ThirdRandNum);
-        return computerInput;
     }
-
-    public int runBaseballGame() {
-        int returnNumber = 0;
-        String computerInput = this.generateRandomNumberBalls();
-        System.out.println("테스트 용도입니다 : " + computerInput);
-
-        while (true) {
-            // 유저 인풋 받기
-            String userInput = "";
-            Scanner tempValues = new Scanner(System.in);
-            userInput += String.valueOf(tempValues.nextLine());
-
-            if(userInput.length() != 3) {
-                System.out.println("3자리만 입력하세요 : " + userInput);
-                continue;
-            }
-
-            if(!userInput.matches("[0-9]+") ) {
-                System.out.println("숫자만 입력하세요. : " + userInput);
-                continue;
-            }
-
-            // 스트라이크, 볼, 낫싱 여부 판단해서 변수에 담기
-            int strikeCnt = this.getStrikeCnt(computerInput, userInput);
-            int ballCnt = this.getBallCnt(computerInput, userInput);
-            String nothing = this.isNothing(computerInput, userInput);
-            // 스트라이크, 볼, 낫싱 여부 출력
-            if ((strikeCnt > 0) || (ballCnt > 0)) {
-                System.out.println(ballCnt + "볼 " + strikeCnt + "스트라이크");
-            }
-            if ((strikeCnt == 0) & (ballCnt == 0)) {
-                System.out.println("낫싱");
-            }
-            // 스트라이크가 3이면 게임 종료 메시지 출력
-            int tempUserInput = 0;
-            if (strikeCnt == 3) {
-                System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
-                System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
-                Scanner tempInput = new Scanner(System.in);
-                tempUserInput += tempInput.nextInt();
-
-                if ((tempUserInput <= 0) || (tempUserInput > 2)) {
-                    System.out.println("1과 2 둘 중 하나의 숫자를 입력해 주세요.");
-                    System.out.println("1: 게임 새로 시작");
-                    System.out.println("2: 게임 종료");
-                }
-                returnNumber += tempUserInput;
-                break;
-            }
-        }
-        return returnNumber;
+    public void getUserInputWhenThreeStrike() {
+        System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
+        System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
     }
 }
